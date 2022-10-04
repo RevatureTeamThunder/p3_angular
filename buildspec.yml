@@ -2,6 +2,9 @@ version: 0.2
 env:
   variables:
     APP_NAME: "p3-angular"
+artifacts:
+  files:
+    - '**/*'    
 phases:
   install:
     runtime-versions:
