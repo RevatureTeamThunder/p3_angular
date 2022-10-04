@@ -2,8 +2,7 @@ version: 0.2
 env:
   variables:
     CACHE_CONTROL: "86400"
-    S3_BUCKET: {p3-client}
-    BUILD_FOLDER: {dist}
+    S3_BUCKET: "p3-client"
     BUILD_ENV: "prod"
     APP_NAME: "p3-angular"   
 phases:
