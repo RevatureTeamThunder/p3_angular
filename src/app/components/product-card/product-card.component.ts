@@ -32,7 +32,7 @@ export class ProductCardComponent implements OnInit{
     );
   }
 
-  addToCart(product: Product): void {
+  addToCart(product: Product, qty: number): void {
 
     let inCart = false;
 
@@ -41,7 +41,7 @@ export class ProductCardComponent implements OnInit{
         if(element.product == product){
           ++element.quantity;
           let cart = {
-            cartCount: this.cartCount + 1,
+            cartCount: this.cartCount + qty,
             products: this.products,
             totalPrice: this.totalPrice + product.price
           };
