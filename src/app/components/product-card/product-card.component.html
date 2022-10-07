@@ -20,9 +20,9 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="inputGroup-sizing-sm">Quantity Select:</span>
         </div>
-        <input type="number" id="quantity-select-input" class="form-control" aria-label="Sizing example input" value="1" aria-describedby="inputGroup-sizing-sm">
+        <input #quantitySelect type="number" id="quantity-select-input" class="form-control" aria-label="Sizing example input" value="1" aria-describedby="inputGroup-sizing-sm">
       </div>
     <div class="card-body">
-        <button class="btn btn-outline-success" (click)="addToCart(productInfo, document.getElementById(&quotquantity-select-input&quot).value);">Add to Cart</button>
+        <button class="btn btn-outline-success" (click)="addToCart(productInfo, (quantitySelect.value));">Add to Cart</button>
     </div>
   </div>
