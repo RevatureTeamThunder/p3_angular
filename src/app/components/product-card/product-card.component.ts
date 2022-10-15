@@ -1,83 +1,80 @@
+import { NgIf } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Cart } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
-  styleUrls: ['./product-card.component.css']
+  styleUrls: ['./product-card.component.css'],
 })
-export class ProductCardComponent implements OnInit{
+export class ProductCardComponent implements OnInit {
+  // cartCount!: number;
+  //  products: {
+  //    product: Product
+  //    quantity: number
+  //  }[] = [];
 
-  cartCount!: number;
-  products: {
-    product: Product,
-    quantity: number
-  }[] = [];
-  subscription!: Subscription;
+  @Input() subscription!: Subscription;
+
   totalPrice: number = 0;
+
+  @Input() cartId!: number;
+
+  @Input() cartProducts!: Cart[];
 
   @Input() productInfo!: Product;
 
-  constructor(private productService: ProductService) { }
-  
-  ngOnInit(): void {
-    this.subscription = this.productService.getCart().subscribe(
-      (cart) => {
-        this.cartCount = cart.cartCount;
-        this.products = cart.products;
-        this.totalPrice = cart.totalPrice;
-        console.log(cart)
-      }
-    );
-    
+  constructor(private productService: ProductService) {}
+
+  ngOnInit(): void {}
+
+  private handleNoCartError(error: HttpErrorResponse) {
+    console.log('ints an error');
+    let auth = localStorage.getItem('ArbId');
+    if (!auth) auth = '';
+
+    if (error.status === 0) {
+      console.error('An error occurred:', error.error);
+    } else {
+      if (error.status === 500) console.log('error status 500');
+      this.productService.createCart(parseInt(auth));
+    }
   }
 
   addToCart(product: Product, qty: string): void {
-
+    console.log(this.cartProducts);
     let inCart = false;
-    
-    
-    this.products.forEach(
-      (element) => {
-        console.log("element " + element)
-        if(element.product.id == product.id){
-          console.log("element = element")
-          element.quantity = element.quantity + Number(qty);
-          console.log("element.quantity is " + element.quantity)
-          let cart = {
-            cartCount: element.quantity,
-            products: this.products,
-            totalPrice: this.totalPrice + (product.price * element.quantity)
-          };
-          this.productService.setCart(cart);
-          inCart=true;
-          return;
-        };
-      }
-    );
 
-    if(inCart == false){
-      let newProduct = {
-        product: product,
-        quantity: Number(qty)
-      };
-      this.products.push(newProduct);
-      let cart = {
-        cartCount: this.cartCount + Number(qty),
-        products: this.products,
-        totalPrice: this.totalPrice + (product.price * (newProduct.quantity-1))
-      }
-      this.productService.setCart(cart);
+    if (this.cartProducts) {
+      this.cartProducts.forEach((element) => {
+        if (element.productId == product.productId) {
+          console.log(this.cartProducts);
+          this.productService
+            .setCart(this.cartId, product.productId, Number(qty))
+            .subscribe(
+              (resp) => console.log(resp),
+              (err) => this.handleNoCartError(err)
+            );
+
+          inCart = true;
+        }
+      });
     }
-
-
-      
+    if (inCart == false) {
+      this.productService
+        .addNewProductToCart(this.cartId, product.productId, Number(qty))
+        .subscribe(
+          (resp) => console.log(resp),
+          (err) => this.handleNoCartError(err)
+        );
+    }
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-
 }

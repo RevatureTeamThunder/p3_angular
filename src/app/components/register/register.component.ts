@@ -3,6 +3,7 @@ import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ProductService } from 'src/app/services/product.service';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class RegisterComponent implements OnInit {
   })
   
   public showEmailError: Boolean
-  constructor(private authService: AuthService, private router: Router, ) { this.showEmailError = false }
+  constructor(private authService: AuthService, private productService: ProductService, private router: Router, ) { this.showEmailError = false }
 
   ngOnInit(): void {
 
@@ -46,7 +47,7 @@ export class RegisterComponent implements OnInit {
   onSubmit(): void {
     
     this.authService.register(this.registerForm.get('fname')?.value, this.registerForm.get('lname')?.value, this.registerForm.get('email')?.value, this.registerForm.get('password')?.value).subscribe(
-      () => console.log("New user registered"),
+      (resp) => this.productService.createCart(resp.customerId).subscribe(),
       (err) => this.handleError(err),
       () => this.router.navigate(['login'])
     );

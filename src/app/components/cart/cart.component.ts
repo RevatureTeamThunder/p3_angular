@@ -1,80 +1,79 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService, Cart } from 'src/app/services/product.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-
-  products: {
-    product: Product,
-    quantity: number
-  }[] = [];
-  totalPrice!: number;
+  cartId!: number;
+  customerId!: number;
+  // products: {
+  //   product: Product;
+  //   quantity: number;
+  // }[] = [];
+  totalPrice: number = 0;
   cartProducts: Product[] = [];
 
-  constructor(private productService: ProductService, private router: Router) { }
+  allCartProducts: Cart[] = [];
+
+  constructor(private productService: ProductService, private router: Router) {}
 
   ngOnInit(): void {
-    this.productService.getCart().subscribe(
-      (cart) => {
-        this.products = cart.products;
-        this.products.forEach(
-          (element) => this.cartProducts.push(element.product)
-        );
-        this.totalPrice = cart.totalPrice;
-      }
-    );
+    let auth = localStorage.getItem('ArbId');
+    if (!auth) auth = '';
+    this.customerId = parseInt(auth);
+    this.productService.getCart(parseInt(auth)).subscribe(
+      (resp) => {
+      (this.allCartProducts = resp),
+      this.allCartProducts.forEach( (element) => (this.totalPrice += element.totalCost)),
+      (this.cartId = resp[0].cartId), () => console.log('Products Retrieved')
+      
+    }, (error) => this.handleNoCartError(error));
   }
 
   emptyCart(): void {
-    let cart = {
-      cartCount: 0,
-      products: [],
-      totalPrice: 0.00
-    };
-    this.productService.setCart(cart);
+    this.allCartProducts.forEach((element) => {
+      this.productService
+        .removeAllFromCart(this.cartId, element.productId)
+        .subscribe(
+          (resp) => console.log(resp),
+          (err) => console.log(err)
+        );
+    });
+
     this.router.navigate(['/home']);
   }
 
-  // removeFromCart(product: Product): void {
-  //   let cart = this.productService.getCart
-  //   let inCart = false;
+  removeFromCart(productId: number): void {
 
-  //   this.products.forEach(
-  //     (element) => {
-  //       if(element.product == product){
-  //         ++element.quantity;
-  //         let cart = {
-  //           cartCount: this.cartCount + 1,
-  //           products: this.products,
-  //           totalPrice: this.totalPrice + product.price
-  //         };
-  //         this.productService.setCart(cart);
-  //         inCart=true;
-  //         return;
-  //       };
-  //     }
-  //   );
+    this.productService.removeAllFromCart(this.cartId, productId).subscribe(
+      (resp) => console.log(resp),
+      (err) => console.log(err)
+    );
+    location.reload();
+  }
 
-  //   if(inCart == false){
-  //     let newProduct = {
-  //       product: product,
-  //       quantity: 1
-  //     };
-  //     this.products.push(newProduct);
-  //     let cart = {
-  //       cartCount: this.cartCount + 1,
-  //       products: this.products,
-  //       totalPrice: this.totalPrice + product.price
-  //     }
-  //     this.productService.setCart(cart);
-  //   }
-      
-  // }
+  updateCartCount(productId: number, qty: string) {
+    this.productService.setCart(this.cartId, productId, Number(qty)).subscribe(
+      (resp) => console.log(resp),
+      (err) => console.log(err)
+    );
+    location.reload();
+  }
 
+  private handleNoCartError(error: HttpErrorResponse) {
+
+    if (error.status === 0) {
+      console.error('An error occurred:', error.error);
+    } else {
+      if (error.status === 500) console.log('error status 500');
+        console.log("No cart")
+    }
+  }
+  
 }

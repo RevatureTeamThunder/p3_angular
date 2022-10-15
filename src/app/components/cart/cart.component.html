@@ -5,15 +5,25 @@
         <th scope="col">ID</th>
         <th scope="col">Name</th>
         <th scope="col">Quantity</th>
-        <th scope="col">Description</th>
+        <th scope="col">Price for 1</th>
+        <th scope="col">Price for all</th>
+        <th scope="col">Update Quantity</th>
       </tr>
     </thead>
     <tbody id="cart-table-body">
-        <tr *ngFor="let product of products;">
-            <td>{{product.product.id}}</td>
-            <td>{{product.product.name}}</td>
+        <tr *ngFor="let product of allCartProducts;">
+            <td>{{product.productId}}</td>
+            <td>{{product.name}}</td>
             <td>{{product.quantity}}</td>
-            <td>{{product.product.description}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.totalCost}}</td>
+            <td><div class="input-group input-group-sm mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Quantity Select:</span>
+              </div>
+              <input #quantitySelect type="number" id="quantity-select-input" class="form-control" aria-label="Sizing example input" style="max-width: 50px" value={{product.quantity}} aria-describedby="inputGroup-sizing-sm">
+            </div><button class="btn btn-primary" (click)="updateCartCount(product.productId, (quantitySelect.value))">Update</button></td>
+            <button class="btn btn-danger" (click)="removeFromCart(product.productId)">Remove</button>
         </tr>
     </tbody>
 </table>
