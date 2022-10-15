@@ -55,7 +55,7 @@ export class CartComponent implements OnInit {
       (resp) => console.log(resp),
       (err) => console.log(err)
     );
-    location.reload();
+    this.router.navigate(['/home']);
   }
 
   updateCartCount(productId: number, qty: string) {
@@ -63,7 +63,7 @@ export class CartComponent implements OnInit {
       (resp) => console.log(resp),
       (err) => console.log(err)
     );
-    location.reload();
+    this.router.navigate(['/home']);
   }
 
   private handleNoCartError(error: HttpErrorResponse) {
