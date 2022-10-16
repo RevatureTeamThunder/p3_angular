@@ -13,6 +13,7 @@ import { DisplayProductsComponent } from './components/display-products/display-
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductReviewsComponent } from './components/product-reviews/product-reviews.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ProductReviewsComponent } from './components/product-reviews/product-re
     CartComponent,
     CheckoutComponent,
     DisplayProductsComponent,
-    ProductReviewsComponent
+    ProductReviewsComponent,
+    ProductDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -51,9 +51,7 @@
                   <i class="fa fa-star" data-star="4"></i>
                 </div>
   
-                <div class="rating-text">
-                  <span><a class="rating-text" [routerLink]='["api/review"]'>See other reviews</a></span>
-                </div>
+                
             </div>
             <div class="ratings" *ngIf="productInfo.rating == 0 || productInfo.rating == null">  
               <p>No product reviews</p>
@@ -61,7 +59,8 @@
         </div>
     </div>  
       
-
+    <a [routerLink]="['api/product/', productInfo.productId]" class="btn btn-primary">See Product Details</a>
+    
     <!-- Add to Cart Button   -->
     <div class="card-body">
         <button class="btn btn-outline-success" (click)="addToCart(productInfo, (quantitySelect.value));">Add to Cart</button>

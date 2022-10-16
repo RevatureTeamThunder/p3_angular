@@ -37,4 +37,13 @@ export class ProductReviewsService {
   public getProductReviewsByProductId(productId: number): Observable<ProductReview[]>{
     return this.http.get<ProductReview[]>(`${this.apiServerUrl}/view/`+productId);
   }
+
+  public addReview(productId: number, customerId: number, rating: number, comments: string): Observable<ProductReview>{
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("productId", productId);
+    queryParams = queryParams.append("customerId", customerId);
+    queryParams = queryParams.append("rating", rating);
+    queryParams = queryParams.append("comments", comments);
+    return this.http.put<ProductReview>(`${this.apiServerUrl}/add`, {params: queryParams});
+  }
 }

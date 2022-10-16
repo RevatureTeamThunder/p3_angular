@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+<div *ngIf="product !== undefined">
+<div class ="row">
+    <div class="col-12">
+        <h1> {{ product.name }}</h1>
+    </div>
+</div>
+</div>
+<div class ="row">
+    <div class="col-5">
+        <img class="card-img-top" [src]="product.image" alt="Card image cap">
+    </div>
+    <div class="col-7">
+        <ul>
+            <li>{{ product.description }}</li>
+            <li>{{ product.price | currency }}</li>
+            <li>{{ product.quantity }}</li>
+            <li>{{ product.rating }}</li>
+        </ul>
+        <div>
+        <button [routerLink]="['/home']" class="btn btn-primary">Add to Cart</button>
+        </div><br>
+        <div>
+        <button [routerLink]="['/home']" class="btn btn-primary">Back</button>
+        </div>   
+    </div>
+</div>
+<app-product-reviews></app-product-reviews>
