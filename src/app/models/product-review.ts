@@ -1,7 +1,7 @@
 export interface ProductReview {
     reviewId: number;
-    customerId: number;
-    productId: number;
+    customer_id: number;
+    product_id: number;
     rating: number;
     productComments: string;
 }

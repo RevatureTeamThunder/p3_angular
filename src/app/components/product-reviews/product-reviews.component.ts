@@ -86,8 +86,8 @@ export class ProductReviewsComponent implements OnInit {
     if (!auth) auth = '';
     this.customerId = parseInt(auth);
     this.getProductIdInParams(this.productId);
-    
-    this.productReviewsService.addReview(this.productId, this.customerId, this.reviewForm.get('rating')?.value, this.reviewForm.get('comments')?.value).subscribe(
+    console.log()
+    this.productReviewsService.addReview(this.productInfo.productId, this.customerId, Number(this.reviewForm.get('rating')?.value), this.reviewForm.get('comments')?.value).subscribe(
       (response: ProductReview) =>{
         this.productReview = response;
         console.log(response);

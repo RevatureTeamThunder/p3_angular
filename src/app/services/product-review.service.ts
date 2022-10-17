@@ -42,7 +42,7 @@ export class ProductReviewsService {
     // let queryParams = new HttpParams();
     // queryParams = queryParams.append("rating", rating);
     // queryParams = queryParams.append("comments", comments);
-    const payload = {productId: productId, customerId: customerId, rating: rating, comments: comments};
-    return this.http.put<ProductReview>(`${this.apiServerUrl}/add/`+ payload, {headers: environment.headers, withCredentials: environment.withCredentials});
+    const payload = {product_id: productId, customer_id: customerId, rating: rating, comment: comments};
+    return this.http.put<ProductReview>(`${this.apiServerUrl}/add`, payload, {headers: environment.headers, withCredentials: environment.withCredentials});
   }
 }
