@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
   })
   
   public showEmailError: Boolean
-  constructor(private authService: AuthService, private productService: ProductService, private router: Router, ) { this.showEmailError = false }
+  constructor(private authService: AuthService, private productService: ProductService, private router: Router) { this.showEmailError = false }
 
   ngOnInit(): void {
 
