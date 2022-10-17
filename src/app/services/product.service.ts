@@ -98,6 +98,6 @@ export class ProductService {
   }
 
   public purchase(cartId:number): Observable<any> {
-    return this.http.put<any>(environment.baseUrl+this.orderUrl+"/add?cart_id="+cartId, null,{headers: environment.headers, withCredentials: environment.withCredentials})
+    return this.http.put<any>(environment.baseUrl+this.orderUrl+"/add/"+cartId, null,{headers: environment.headers, withCredentials: environment.withCredentials})
   }
 }
