@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductReviewsComponent } from './components/product-reviews/product-reviews.component';
 import { RegisterComponent } from './components/register/register.component';
+import { PreviousOrdersComponent } from './previous-orders/previous-orders.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: "checkout", component: CheckoutComponent },
   { path: "home/api/review", component: ProductReviewsComponent },
   { path: "home/api/product/:id", component: ProductDetailsComponent },
+  { path: "previousorders", component: PreviousOrdersComponent },
 ];
 
 @NgModule({

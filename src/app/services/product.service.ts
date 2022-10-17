@@ -28,11 +28,15 @@ export class ProductService {
 
   private productUrl: string = "/api/product/";
 
+  private orderUrl: string = "/api/order";
+
   private cartUrl: string = "/api/cart/view";
 
   private cartIdUrl: string = "/api/cart/customer_id/";
 
   private addToCartUrl: string = "/api/cart/";
+
+  constructor(private http: HttpClient) { }
 
   // private _cart = new BehaviorSubject<Cart>({
   //   cartCount: 0,
@@ -79,7 +83,7 @@ export class ProductService {
     return this.http.put<any>(environment.baseUrl+this.addToCartUrl + cartId + "/update?product_id=" + productId + "&quantity=" + quantity,null,{headers: environment.headers, withCredentials: environment.withCredentials, params: queryParamsSetCart})
    }
 
-  constructor(private http: HttpClient) { }
+  
 
   public getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(environment.baseUrl+this.productUrl, {headers: environment.headers, withCredentials: environment.withCredentials});
@@ -93,8 +97,7 @@ export class ProductService {
     return this.http.get<Product>(environment.baseUrl+this.productUrl+id,  {headers: environment.headers, withCredentials: environment.withCredentials});
   }
 
-  public purchase(products: {id:number, quantity:number}[]): Observable<any> {
-    const payload = JSON.stringify(products);
-    return this.http.patch<any>(environment.baseUrl+this.productUrl, payload, {headers: environment.headers, withCredentials: environment.withCredentials})
+  public purchase(cartId:number): Observable<any> {
+    return this.http.put<any>(environment.baseUrl+this.orderUrl+"/add?cart_id="+cartId, null,{headers: environment.headers, withCredentials: environment.withCredentials})
   }
 }

@@ -52,26 +52,14 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.products.forEach((element) => {
-      const id = element.product.productId;
-      const quantity = element.quantity;
-      this.finalProducts.push({ id, quantity });
-    });
 
-    if (this.finalProducts.length > 0) {
-      this.productService.purchase(this.finalProducts).subscribe(
+    if (this.cartProducts.length > 0) {
+      this.productService.purchase(23).subscribe(
         (resp) => console.log(resp),
-        (err) => console.log(err),
-        () => {
-          let cart = {
-            cartCount: 0,
-            products: [],
-            totalPrice: 0.0,
-          };
-          // this.productService.setCart(cart);
-          this.router.navigate(['/home']);
-        }
-      );
+        (err) => console.log(err)
+      );   
+      alert("Thank you for your purchase!")
+      this.router.navigate(['/home']);
     } else {
       this.router.navigate(['/home']);
     }

@@ -1,12 +1,16 @@
 <nav class="navbar navbar-light" style="background-color: #abd7f7;">
     <h4>
         <img src="../../../assets/images/quirkypet.png" width="8%" height="8%" alt="Revature">
-        Quirky Pets Shoppe
+        <a [routerLink]="['/home']">Quirky Pets Shoppe</a>
     </h4>
     <form class="form-inline">
         <button class="btn btn-primary" [routerLink]="['/cart']">
             Cart
             <span class="badge badge-info">{{cartCount}}</span>
+        </button>
+        
+        <button class="btn btn-primary" [routerLink]="['/previousorders']">
+            Previous Orders
         </button>
         <button class="btn btn-outline-danger my-2 my-sm-0" (click)="logout();">Logout</button>
     </form>

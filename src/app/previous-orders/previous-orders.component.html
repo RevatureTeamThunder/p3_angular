@@ -1,0 +1,21 @@
+<app-navbar></app-navbar>
+
+<table class="table table-striped" id="cart-table">
+  <caption style="caption-side:top; font-size:large">Previous Orders</caption>
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Product Details</th>
+      <th scope="col">Order total price</th>
+    </tr>
+  </thead>
+  <tbody id="cart-table-body">
+      <tr *ngFor="let product of allCartProducts;">
+          <td>{{product.name}}</td>
+          <td>{{product.quantity}}</td>
+          <td><a [routerLink]="['/home/api/product/', product.productId]" class="btn btn-primary">Product Details</a></td>
+          <td>{{product.totalCost}}</td>
+        </tr>
+      </tbody>
+      <button class="btn btn-danger" [routerLink]="['/home']">Back</button>     

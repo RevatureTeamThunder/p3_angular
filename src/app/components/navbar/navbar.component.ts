@@ -10,7 +10,7 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  cartCount!: number;
+  cartCount!: number ;
   subscription!: Subscription;
 
   constructor(
@@ -23,7 +23,12 @@ export class NavbarComponent implements OnInit {
     let auth = localStorage.getItem('ArbId');
     if (!auth) auth = '';
 
-    this.subscription = this.productService.getCart(parseInt(auth)).subscribe();
+    this.subscription = this.productService.getCart(parseInt(auth)).subscribe(
+      (resp) => { console.log(resp)
+        // resp.forEach( (element) => (this.cartCount += element.quantity))
+        this.cartCount = resp[0].quantity;
+      }
+    );
   }
 
   ngOnDestroy() {

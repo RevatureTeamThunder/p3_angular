@@ -1,0 +1,32 @@
+/* unvisited link */
+a:link {
+  color: black;
+  text-decoration: none; 
+}
+
+/* visited link */
+a:visited {
+  color: black;
+  text-decoration: none; 
+}
+
+/* mouse over link */
+a:hover {
+  color: white;
+  text-decoration: none; 
+}
+
+/* selected link */
+a:active {
+  color: black;
+  text-decoration: none; 
+}
+
+button {
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+form {
+  min-width: 350px;
+}
