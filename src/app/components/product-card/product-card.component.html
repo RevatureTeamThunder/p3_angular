@@ -1,8 +1,8 @@
 <div class="card" style="width: 18rem;">
-    <img class="card-img-top" [src]="productInfo.image" alt="Card image cap" style="object-fit: cover; object-position: 50% 50%;">
+    <img class="card-img-top" [src]="productInfo.image" alt="No Image Available" style="object-fit: cover; object-position: 50% 50%;">
     <div class="card-body">
-      <h5 class="card-title">{{productInfo.name}} </h5>
-      <p class="card-text">{{productInfo.description}}</p>
+      <h6 class="card-title">{{productInfo.name}} </h6>
+      <!-- <p class="card-text">{{productInfo.category_id}}</p> -->
     </div>
 
     <!-- Product Price -->
@@ -31,19 +31,20 @@
     
       <!-- Rating -->
       <p class="card-text" style="text-align: center;">Product Reviews</p>
-      <div class="d-flex justify-content-center">                        
+      <div class="d-flex justify-content-center" id="rating-container">                        
         <div class="content text-center">
             <div class="ratings" *ngIf="productInfo.rating !== 0 && productInfo.rating !== null">
-                <span class="product-rating">{{productInfo.rating}}<span>/5</span></span>
-                
-                <div class="col-sm-12">
-                  <ul class="list-inline rating-list" 
+              <div class="col-sm-12"> 
+              <span class="product-rating">{{productInfo.rating}}<span>/5</span></span>
+              </div>   
+                <!-- <div class="col-sm-12"> -->
+                  <div class="list-inline rating-list" 
                       *ngFor="let star of stars" style="display: inline-block" >
                         <li (click)="countStar()" [ngClass]="{'selected': (star <= starRating)}">
                           <i class="fa fa-star"></i>
                         </li> 
-                  </ul>
-                </div>
+                  </div>
+                <!-- </div> -->
   
             </div>
             <div class="ratings" *ngIf="productInfo.rating == 0 || productInfo.rating == null">  
@@ -54,8 +55,9 @@
     </div>  
       
     <!-- Product Details Button -->
+    <br>
     <a [routerLink]="['api/product/', productInfo.productId]" class="btn btn-primary">See Product Details</a>
-    
+
     <!-- Add to Cart Button   -->
     <div class="card-body">
         <button class="btn btn-outline-success" (click)="addToCart(productInfo, (quantitySelect.value));">Add to Cart</button>
