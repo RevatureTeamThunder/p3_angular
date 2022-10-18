@@ -19,8 +19,9 @@ export class ProductReviewsComponent implements OnInit {
   productReview!: ProductReview;
   customerId!: number;
   productId!: number;
-  // singleProduct: Product;
-  // subscription: Subscription;
+
+  stars: number[] = [1, 2, 3, 4, 5];
+  selectedValue!: number;
 
   reviewForm = new UntypedFormGroup({
     rating: new UntypedFormControl(''),
@@ -40,6 +41,11 @@ export class ProductReviewsComponent implements OnInit {
       this.route.params.subscribe(params =>
         (this.getProductIdInParams(params['id']))
         );  
+  }
+
+  countStar(star: number){
+    this.selectedValue = star;
+    console.log('Value of star', star);
   }
 
   public getMyProductReviews(customerId: number): void {
@@ -70,7 +76,7 @@ export class ProductReviewsComponent implements OnInit {
         this.productReviewsList = response;
       },
       (error: HttpErrorResponse) =>{
-        alert(error.message);
+        console.log("No exisiting reviews from database");
       }
     );
   }
@@ -86,16 +92,17 @@ export class ProductReviewsComponent implements OnInit {
     if (!auth) auth = '';
     this.customerId = parseInt(auth);
     this.getProductIdInParams(this.productId);
+    let rating = this.selectedValue;
     console.log()
-    this.productReviewsService.addReview(this.productInfo.productId, this.customerId, Number(this.reviewForm.get('rating')?.value), this.reviewForm.get('comments')?.value).subscribe(
+    this.productReviewsService.addReview(this.productInfo.productId, this.customerId, rating, this.reviewForm.get('comments')?.value).subscribe(
       (response: ProductReview) =>{
         this.productReview = response;
         console.log(response);
       },
       (error: HttpErrorResponse) =>{
         alert(error.message);
-      },  
-      () => this.router.navigate(['home/api/product/:id'])
+      },
+      () => {this.getProductReviewsByProductId}
     );
   }
 }

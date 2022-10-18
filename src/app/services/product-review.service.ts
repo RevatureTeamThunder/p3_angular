@@ -1,19 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ProductReview } from '../models/product-review';
-
-
-// interface ProductReview{
-//   reviewId: number;
-//   customerId: number;
-//   productId: number;
-//   rating: number;
-//   productComments: string;
-// }
-
-
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -35,9 +25,18 @@ export class ProductReviewsService {
   }
 
   public getProductReviewsByProductId(productId: number): Observable<ProductReview[]>{
-    return this.http.get<ProductReview[]>(`${this.apiServerUrl}/view/`+productId);
+    return this.http.get<ProductReview[]>(`${this.apiServerUrl}/view/`+productId).pipe(
+      catchError(error => {
+        if (error.status == 500)  {
+        throwError("No exisiting reviews from database.")
+        }
+        console.log("No exisiting reviews from database.")
+        
+        return throwError(error);
+      })
+    );
   }
-
+    
   public addReview(productId: number, customerId: number, rating: number, comments: string): Observable<ProductReview>{
     // let queryParams = new HttpParams();
     // queryParams = queryParams.append("rating", rating);

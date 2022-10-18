@@ -1,17 +1,35 @@
+
+
+
 <form id="review-form" [formGroup]="reviewForm">
     <div class="form-group">
         <label for="inputFirstName">Product Rating:</label>
-        <input type="text" class="form-control" formControlName="rating" id="inputFirstName" placeholder="Enter Rating">
+        
+            <div class="col-sm-12">
+                <ul class="list-inline rating-list" 
+                    *ngFor="let star of stars" style="display: inline-block" >
+                      <li (click)="countStar(star)"
+                          [ngClass]="{'selected': (star <= selectedValue)}">
+                        <i class="fa fa-star"></i>
+                      </li> 
+                </ul>
+            </div>
+          
+        <!-- <input type="hidden" class="form-control" formControlName="rating" id="inputRating" placeholder="Enter Rating"> -->
       </div>
     <div class="form-group">
         <label for="inputLastName">Product Comments:</label>
-        <input type="text" class="form-control" formControlName="comments" id="inputLastName" placeholder="Write a review...">
+        <input type="text" class="form-control" formControlName="comments" id="inputComments" placeholder="Write a review...">
     </div>
 
     <button class="btn btn-primary" (click)="addAProductReview()">Submit</button>
 </form>
 
 <p> Product Rating</p>
+<div *ngIf="productReviewsList == undefined && productReviewsList == undefined">
+   <p>Be the first one to add a review!</p> 
+</div>
+<div *ngIf="productReviewsList !== undefined && productReviewsList !== undefined">
 <table>
     <thead>
         <tr>
@@ -30,3 +48,4 @@
         </tr>
     </tbody>
 </table>
+</div>

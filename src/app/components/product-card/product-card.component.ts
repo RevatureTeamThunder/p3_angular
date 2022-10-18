@@ -17,6 +17,9 @@ export class ProductCardComponent implements OnInit {
   //    product: Product
   //    quantity: number
   //  }[] = [];
+  stars: number[] = [1, 2, 3, 4, 5];
+  starRating!: number;
+
 
   @Input() subscription!: Subscription;
 
@@ -30,7 +33,9 @@ export class ProductCardComponent implements OnInit {
 
   constructor(private productService: ProductService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.countStar();
+  }
 
   private handleNoCartError(error: HttpErrorResponse) {
     console.log('ints an error');
@@ -74,6 +79,11 @@ export class ProductCardComponent implements OnInit {
     }
   }
 
+  countStar(){
+    //this.selectedValue = star;
+    this.starRating = this.productInfo.rating;
+    console.log('Value of star', this.starRating);
+  }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

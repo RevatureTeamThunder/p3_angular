@@ -55,7 +55,7 @@ export class CartComponent implements OnInit {
       (resp) => console.log(resp),
       (err) => console.log(err)
     );
-    this.router.navigate(['/home']);
+    //this.router.navigate(['/home']);
   }
 
   updateCartCount(productId: number, qty: string) {

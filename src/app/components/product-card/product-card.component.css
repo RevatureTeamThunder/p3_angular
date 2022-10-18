@@ -26,3 +26,19 @@
     box-shadow: 0 5px 10px rgba(0,0,0,.2);
     transform: translate3d(0,-10px,0);
   }
+
+  .rating-list li, .rating-list li.selected {
+    float: right;
+    color: #b9b8b3;
+    padding: 10px 5px;
+  
+  }
+  
+  .rating-list li.selected {
+    color: #ffd700;
+  } */
+  
+  .rating-list {
+    display: inline-block;
+    list-style: none;
+  }
