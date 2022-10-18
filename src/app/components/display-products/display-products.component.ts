@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import { ProductService, Cart } from 'src/app/services/product.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./display-products.component.css'],
 })
 export class DisplayProductsComponent implements OnInit {
-  allProducts: Product[] = [];
+  allProducts!: Product[];
 
   cartId!: number;
 
@@ -18,14 +18,12 @@ export class DisplayProductsComponent implements OnInit {
 
   subscription!: Subscription;
 
+  //private subject = new Subject<any>();
+
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe(
-      (resp) => (this.allProducts = resp),
-      (err) => console.log(err),
-      () => console.log('Products Retrieved')
-    );
+   this.getProductList();
 
     let auth = localStorage.getItem('ArbId');
     if (!auth) auth = '';
@@ -51,6 +49,33 @@ export class DisplayProductsComponent implements OnInit {
     } else {
       if (error.status === 500) console.log('error status 500');
         console.log("No cart")
+    }
+  }
+  public getProductList(): void{
+  this.productService.getProducts().subscribe(
+    (response: Product[]) => {
+      this.allProducts = response;
+    },
+    (error: HttpErrorResponse) =>{
+      console.log(error);
+    },
+    () => console.log('Products Retrieved')
+  );
+  }
+  searchProducts(key:string): void{
+    console.log(key);
+    const results: Product[] = [];
+    for(const product of this.allProducts){
+      if(product.name.toLowerCase().indexOf(key.toLowerCase())
+      !== -1){
+        results.push(product);
+        //this.subject.next();
+        console.log(product);
+      }
+    }
+    this.allProducts = results;
+    if (results.length === 0 || !key){
+      this.getProductList();
     }
   }
 }

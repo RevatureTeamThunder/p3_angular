@@ -12,6 +12,12 @@
         <button class="btn btn-primary" [routerLink]="['/previousorders']">
             Previous Orders
         </button>
+
+         <div class="form-outline">
+            <input type="search" (ngModelChange)="callSearchMethod(key.value)" #key="ngModel" ngModel name="key"
+            id="searchItem" class="form-control" placeholder="Search item.." aria-label="Search" />
+            </div>
+
         <button class="btn btn-outline-danger my-2 my-sm-0" (click)="logout();">Logout</button>
     </form>
 </nav>

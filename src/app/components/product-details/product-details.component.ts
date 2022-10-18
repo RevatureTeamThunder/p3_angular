@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ProductCardComponent } from '../product-card/product-card.component';
 
 @Component({
   selector: 'app-product-details',
@@ -11,7 +12,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ProductDetailsComponent implements OnInit {
 
-  constructor(private productService: ProductService, private route:ActivatedRoute) { }
+  constructor(private productService: ProductService, 
+    private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params =>

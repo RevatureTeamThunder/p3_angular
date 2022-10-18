@@ -37,7 +37,9 @@ import { PreviousOrdersComponent } from './components/previous-orders/previous-o
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    DisplayProductsComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
