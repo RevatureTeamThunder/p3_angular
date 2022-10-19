@@ -106,7 +106,7 @@ export class ProductReviewsComponent implements OnInit {
     );
 
     setTimeout(() => {
-      document.location.reload();
+      location.href = location.href;
     }, 500);
   }
 }

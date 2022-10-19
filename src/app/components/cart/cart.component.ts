@@ -57,7 +57,7 @@ export class CartComponent implements OnInit {
     );
     
     setTimeout(() => {
-      document.location.reload();
+      location.href = location.href;
     }, 500);
   }
 
@@ -69,7 +69,7 @@ export class CartComponent implements OnInit {
     );
     
     setTimeout(() => {
-      document.location.reload();
+      location.href = location.href;
     }, 500);
   }
 
