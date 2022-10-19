@@ -12,6 +12,8 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 })
 export class ProductDetailsComponent implements OnInit {
 
+
+
   constructor(private productService: ProductService, 
     private route:ActivatedRoute) { }
 
@@ -31,4 +33,5 @@ export class ProductDetailsComponent implements OnInit {
         alert(error.message);
     }
   }
+
 }

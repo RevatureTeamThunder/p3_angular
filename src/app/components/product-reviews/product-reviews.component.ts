@@ -102,7 +102,7 @@ export class ProductReviewsComponent implements OnInit {
       (error: HttpErrorResponse) =>{
         alert(error.message);
       },
-      () => {this.getProductReviewsByProductId}
+      () => {window.location.reload()}
     );
   }
 }

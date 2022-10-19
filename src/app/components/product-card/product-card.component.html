@@ -44,13 +44,13 @@
                           <i class="fa fa-star"></i>
                         </li> 
                   </div>
-                <!-- </div> -->
+              
   
             </div>
             <div class="ratings" *ngIf="productInfo.rating == 0 || productInfo.rating == null">  
               <p>No product reviews</p>
               <a [routerLink]="['api/product/', productInfo.productId]">Be the first to add a review!</a>
-            </div>
+          </div>
         </div>
     </div>  
       

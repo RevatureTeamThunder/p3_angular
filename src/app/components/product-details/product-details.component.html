@@ -24,7 +24,6 @@
     </div>
 </div> -->
 
-
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
 <div class="container">
     <!-- product -->
@@ -39,13 +38,9 @@
             <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
                 <h3 class="name">
                     {{ product.name }}
-                    
-
-                    <span class="fa fa-2x"><h6>{{product.rating}}/5 ratings
-                    <a href="javascript:void(0);">{{product.review_count}} customer reviews</a>
-                    </h6>
-                    </span>
-                </h3>
+                </h3>    
+                <hr />
+                    <span class="fa fa-2x"><h6>{{product.rating}}/5 ratings</h6></span>
                 <hr />
                 <h3 class="price-container">
                    {{ product.price | currency }}
@@ -54,7 +49,7 @@
                 <hr />
                 <div class="description description-tabs">
                     <ul id="myTab" class="nav nav-pills">
-                        <li class="active"><a href="#more-information" data-toggle="tab" class="no-margin">Product Description </a></li>
+                        <li class="active"><a href="#more-information" data-toggle="tab" class="no-margin">See Description </a></li>
                         <li class=""><a href="#reviews" data-toggle="tab">See Reviews</a></li>
                     </ul>
                         <div id="myTabContent" class="tab-content">
