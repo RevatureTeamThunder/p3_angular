@@ -13,17 +13,29 @@ export class DisplayProductsComponent implements OnInit {
   allProducts!: Product[];
 
   cartId!: number;
-
+  cartCount!: number;
   cartProducts!: Cart[];
 
   subscription!: Subscription;
 
-  //private subject = new Subject<any>();
-
   constructor(private productService: ProductService) {}
 
+  message!: number;
+
+  count!: number;
+
+  receiveMessage($event: number) {
+    this.receiveCount;
+    this.message = this.count + $event;
+    console.log(this.message);
+  }
+
+  receiveCount($event: number) {
+    this.count = $event;
+  }
+
   ngOnInit(): void {
-   this.getProductList();
+    this.getProductList();
 
     let auth = localStorage.getItem('ArbId');
     if (!auth) auth = '';
@@ -43,38 +55,36 @@ export class DisplayProductsComponent implements OnInit {
   }
 
   private handleNoCartError(error: HttpErrorResponse) {
-
     if (error.status === 0) {
       console.error('An error occurred:', error.error);
     } else {
       if (error.status === 500) console.log('error status 500');
-        console.log("No cart")
+      console.log('No cart');
     }
   }
-  public getProductList(): void{
-  this.productService.getProducts().subscribe(
-    (response: Product[]) => {
-      this.allProducts = response;
-    },
-    (error: HttpErrorResponse) =>{
-      console.log(error);
-    },
-    () => console.log('Products Retrieved')
-  );
+  public getProductList(): void {
+    this.productService.getProducts().subscribe(
+      (response: Product[]) => {
+        this.allProducts = response;
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      },
+      () => console.log('Products Retrieved')
+    );
   }
-  searchProducts(key:string): void{
+  searchProducts(key: string): void {
     console.log(key);
     const results: Product[] = [];
-    for(const product of this.allProducts){
-      if(product.name.toLowerCase().indexOf(key.toLowerCase())
-      !== -1){
+    for (const product of this.allProducts) {
+      if (product.name.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
         results.push(product);
         //this.subject.next();
         console.log(product);
       }
     }
     this.allProducts = results;
-    if (results.length === 0 || !key){
+    if (results.length === 0 || !key) {
       this.getProductList();
     }
   }

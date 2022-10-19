@@ -12,7 +12,7 @@ import { ProductService } from 'src/app/services/product.service';
 @Component({
   selector: 'app-product-reviews',
   templateUrl: './product-reviews.component.html',
-  styleUrls: ['./product-reviews.component.css']
+  styleUrls: ['./product-reviews.component.css'],
 })
 export class ProductReviewsComponent implements OnInit {
   productReviewsList!: ProductReview[];
@@ -26,88 +26,99 @@ export class ProductReviewsComponent implements OnInit {
   reviewForm = new UntypedFormGroup({
     rating: new UntypedFormControl(''),
     comments: new UntypedFormControl(''),
-  })
+  });
 
-  constructor(private productReviewsService: ProductReviewsService,
-    private route: ActivatedRoute, private router: Router) {
-    
-  }
+  constructor(
+    private productReviewsService: ProductReviewsService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
   @Input() productInfo!: Product;
 
   ngOnInit(): void {
-    this.route.params.subscribe(params =>
-      (this.getProductReviewsByProductId(params['id']))
-      );
-      this.route.params.subscribe(params =>
-        (this.getProductIdInParams(params['id']))
-        );  
+    this.route.params.subscribe((params) =>
+      this.getProductReviewsByProductId(params['id'])
+    );
+    this.route.params.subscribe((params) =>
+      this.getProductIdInParams(params['id'])
+    );
   }
 
-  countStar(star: number){
+  countStar(star: number) {
     this.selectedValue = star;
     console.log('Value of star', star);
   }
 
   public getMyProductReviews(customerId: number): void {
     this.productReviewsService.getMyProductReviews(customerId).subscribe(
-      (response: ProductReview[]) =>{
+      (response: ProductReview[]) => {
         this.productReviewsList = response;
       },
-      (error: HttpErrorResponse) =>{
+      (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
   }
 
-  public getProductReviewsByReviewId(reviewId: number): void{
+  public getProductReviewsByReviewId(reviewId: number): void {
     this.productReviewsService.getProductReviewsByReviewId(reviewId).subscribe(
-      (response: ProductReview[]) =>{
+      (response: ProductReview[]) => {
         this.productReviewsList = response;
       },
-      (error: HttpErrorResponse) =>{
+      (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
   }
 
-  public getProductReviewsByProductId(productId: number): void{
-    this.productReviewsService.getProductReviewsByProductId(productId).subscribe(
-      (response: ProductReview[]) =>{
-        this.productReviewsList = response;
-      },
-      (error: HttpErrorResponse) =>{
-        console.log("No exisiting reviews from database");
-      }
+  public getProductReviewsByProductId(productId: number): void {
+    this.productReviewsService
+      .getProductReviewsByProductId(productId)
+      .subscribe(
+        (response: ProductReview[]) => {
+          this.productReviewsList = response;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('No exisiting reviews from database');
+        }
+      );
+  }
+
+  public getProductIdInParams(id: number) {
+    this.route.params.subscribe((params) =>
+      this.getProductReviewsByProductId(params['id'])
     );
   }
-
-  public getProductIdInParams(id: number){
-     this.route.params.subscribe(params =>
-      (this.getProductReviewsByProductId(params['id']))
-      );
-
-  }
-  public addAProductReview(): void{
+  public addAProductReview(): void {
     let auth = localStorage.getItem('ArbId');
     if (!auth) auth = '';
     this.customerId = parseInt(auth);
     this.getProductIdInParams(this.productId);
     let rating = this.selectedValue;
-    console.log()
-    this.productReviewsService.addReview(this.productInfo.productId, this.customerId, rating, this.reviewForm.get('comments')?.value).subscribe(
-      (response: ProductReview) =>{
-        this.productReview = response;
-        console.log(response);
-      },
-      (error: HttpErrorResponse) =>{
-        alert(error.message);
-      },
-      () => {}
-    );
+    console.log();
+    this.productReviewsService
+      .addReview(
+        this.productInfo.productId,
+        this.customerId,
+        rating,
+        this.reviewForm.get('comments')?.value
+      )
+      .subscribe(
+        (response: ProductReview) => {
+          this.productReview = response;
+          console.log(response);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        },
+        () => {}
+      );
     setTimeout(() => {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/home/api/product/' + this.productInfo.productId]);
-  }); 
-  }, 1000);
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate([
+          '/home/api/product/' + this.productInfo.productId,
+        ]);
+      });
+    }, 1000);
   }
 }

@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
@@ -20,7 +20,6 @@ export class ProductCardComponent implements OnInit {
   stars: number[] = [1, 2, 3, 4, 5];
   starRating!: number;
 
-
   @Input() subscription!: Subscription;
 
   totalPrice: number = 0;
@@ -31,10 +30,59 @@ export class ProductCardComponent implements OnInit {
 
   @Input() productInfo!: Product;
 
+  message: number = 0;
+
+  @Output() messageEvent = new EventEmitter<number>();
+
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
     this.countStar();
+  }
+
+  sendMessage() {
+    this.messageEvent.emit(this.message);
+  }
+
+  addToCart(product: Product, qty: string): void {
+    console.log(this.cartProducts);
+    let inCart = false;
+
+    if (this.cartProducts) {
+      this.cartProducts.forEach((element) => {
+        if (element.productId == product.productId) {
+          this.productService
+            .setCart(
+              this.cartId,
+              product.productId,
+              element.quantity + Number(qty)
+            )
+            .subscribe(
+              (resp) => console.log(resp),
+              (err) => this.handleNoCartError(err)
+            );
+          this.message = Number(qty);
+          inCart = true;
+        }
+      });
+    }
+    if (inCart == false) {
+      this.productService
+        .addNewProductToCart(this.cartId, product.productId, Number(qty))
+        .subscribe(
+          (resp) => console.log(resp),
+          (err) => this.handleNoCartError(err)
+        );
+      this.message = Number(qty);
+    }
+
+    this.sendMessage();
+  }
+
+  countStar() {
+    //this.selectedValue = star;
+    this.starRating = this.productInfo.rating;
+    console.log('Value of star', this.starRating);
   }
 
   private handleNoCartError(error: HttpErrorResponse) {
@@ -50,42 +98,6 @@ export class ProductCardComponent implements OnInit {
     }
   }
 
-  addToCart(product: Product, qty: string): void {
-    console.log(this.cartProducts);
-    let inCart = false;
-
-    if (this.cartProducts) {
-      
-      this.cartProducts.forEach((element) => {
-        if (element.productId == product.productId) {
-          console.log(this.cartProducts);
-          this.productService
-            .setCart(this.cartId, product.productId, element.quantity + Number(qty))
-            .subscribe(
-              (resp) => console.log(resp),
-              (err) => this.handleNoCartError(err)
-            );
-
-          inCart = true;
-        }
-      });
-   
-    }
-    if (inCart == false) {
-      this.productService
-        .addNewProductToCart(this.cartId, product.productId, Number(qty))
-        .subscribe(
-          (resp) => console.log(resp),
-          (err) => this.handleNoCartError(err)
-        );
-    }
-  }
-
-  countStar(){
-    //this.selectedValue = star;
-    this.starRating = this.productInfo.rating;
-    console.log('Value of star', this.starRating);
-  }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

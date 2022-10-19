@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  SimpleChange,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,9 +19,19 @@ import { DisplayProductsComponent } from '../display-products/display-products.c
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  cartCount: number =0;
+  cartCount: number = 0;
   subscription!: Subscription;
   cartProducts!: Cart[];
+
+  @Input() childMessage!: number;
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.childMessage.currentValue) this.cartCount = this.childMessage;
+  }
+
+  counter: number = 0;
+
+  @Output() messageEvent = new EventEmitter<number>();
 
   constructor(
     private authService: AuthService,
@@ -22,26 +40,25 @@ export class NavbarComponent implements OnInit {
     private displayComp: DisplayProductsComponent
   ) {}
 
+  sendCounter() {
+    this.messageEvent.emit(this.counter);
+  }
+
   ngOnInit(): void {
     let auth = localStorage.getItem('ArbId');
     if (!auth) auth = '';
-
-    this.subscription = this.productService.getCart(parseInt(auth)).subscribe(
-      // (resp) => { console.log(resp)
-      //   resp.forEach( (element) => {(this.cartCount += element.quantity), console.log(element.quantity)})
-        //this.cartCount = resp[0].quantity;
-        (cart) => {
-          this.cartProducts = cart;
-          console.log(this.cartProducts)
-          this.cartProducts.forEach( (element) => {(
-
-            this.cartCount = this.cartCount + element.quantity);
-        }
-
-      
-    );
-      }
-    )
+    console.log(this.childMessage);
+    this.subscription = this.productService
+      .getCart(parseInt(auth))
+      .subscribe((cart) => {
+        this.cartProducts = cart;
+        console.log(this.cartProducts);
+        this.cartProducts.forEach((element) => {
+          this.cartCount += element.quantity;
+          this.counter = this.cartCount;
+          this.sendCounter();
+        });
+      });
   }
 
   ngOnDestroy() {
@@ -54,7 +71,7 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['login']);
   }
 
-  public callSearchMethod(key: string): void{
+  public callSearchMethod(key: string): void {
     this.displayComp.searchProducts(key);
   }
 }

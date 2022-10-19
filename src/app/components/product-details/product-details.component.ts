@@ -8,30 +8,27 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.css']
+  styleUrls: ['./product-details.component.css'],
 })
 export class ProductDetailsComponent implements OnInit {
-
-
-
-  constructor(private productService: ProductService, 
-    private route:ActivatedRoute) { }
+  constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params =>
-      (this.getProductById(params['id']))
-      );
+    this.route.params.subscribe((params) => this.getProductById(params['id']));
   }
 
   @Input() productInfo!: Product;
   product!: Product;
 
-  getProductById(id: number){
-    this.productService.getSingleProduct(id).subscribe(
-      (resp) => this.product = resp),
-      (error: HttpErrorResponse) =>{
+  getProductById(id: number) {
+    this.productService
+      .getSingleProduct(id)
+      .subscribe((resp) => (this.product = resp)),
+      (error: HttpErrorResponse) => {
         alert(error.message);
-    }
+      };
   }
-
 }

@@ -31,7 +31,6 @@ export class RegisterComponent implements OnInit {
   
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
-      // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
     } else {
       if (error.status === 500)
@@ -40,7 +39,6 @@ export class RegisterComponent implements OnInit {
         `Backend returned code ${error.status}, body was: `, error.error);
         this.showEmailError=true;
     }
-    // Return an observable with a user-facing error message.
  
   }
   

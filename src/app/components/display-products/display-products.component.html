@@ -1,4 +1,4 @@
-<app-navbar></app-navbar>
+<app-navbar [childMessage]="message" (messageEvent)="receiveCount($event)" ></app-navbar>
 
 <div class="container">
     <div class="row align-items-start">
@@ -9,6 +9,7 @@
                 [cartId] = "cartId"
                 [cartProducts] = "cartProducts"
                 [subscription] = "subscription"
+                (messageEvent)="receiveMessage($event)"
             ></app-product-card> 
         </div> 
         <br>
