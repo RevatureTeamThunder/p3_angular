@@ -59,7 +59,7 @@ export class ProductCardComponent implements OnInit {
         if (element.productId == product.productId) {
           console.log(this.cartProducts);
           this.productService
-            .setCart(this.cartId, product.productId, Number(qty))
+            .setCart(this.cartId, product.productId, element.quantity + Number(qty))
             .subscribe(
               (resp) => console.log(resp),
               (err) => this.handleNoCartError(err)

@@ -102,7 +102,11 @@ export class ProductReviewsComponent implements OnInit {
       (error: HttpErrorResponse) =>{
         alert(error.message);
       },
-      () => {window.location.reload()}
+      () => {}
     );
+
+    setTimeout(() => {
+      document.location.reload();
+    }, 500);
   }
 }

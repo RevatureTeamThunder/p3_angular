@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { ProductService } from 'src/app/services/product.service';
+import { Cart, ProductService } from 'src/app/services/product.service';
 import { DisplayProductsComponent } from '../display-products/display-products.component';
 
 @Component({
@@ -11,9 +11,9 @@ import { DisplayProductsComponent } from '../display-products/display-products.c
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  cartCount!: number ;
+  cartCount: number =0;
   subscription!: Subscription;
- 
+  cartProducts!: Cart[];
 
   constructor(
     private authService: AuthService,
@@ -27,11 +27,21 @@ export class NavbarComponent implements OnInit {
     if (!auth) auth = '';
 
     this.subscription = this.productService.getCart(parseInt(auth)).subscribe(
-      (resp) => { console.log(resp)
-        // resp.forEach( (element) => (this.cartCount += element.quantity))
-        this.cartCount = resp[0].quantity;
-      }
+      // (resp) => { console.log(resp)
+      //   resp.forEach( (element) => {(this.cartCount += element.quantity), console.log(element.quantity)})
+        //this.cartCount = resp[0].quantity;
+        (cart) => {
+          this.cartProducts = cart;
+          console.log(this.cartProducts)
+          this.cartProducts.forEach( (element) => {(
+
+            this.cartCount = this.cartCount + element.quantity);
+        }
+
+      
     );
+      }
+    )
   }
 
   ngOnDestroy() {

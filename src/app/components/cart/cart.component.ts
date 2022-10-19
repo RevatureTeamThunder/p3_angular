@@ -55,15 +55,26 @@ export class CartComponent implements OnInit {
       (resp) => console.log(resp),
       (err) => console.log(err)
     );
-    //this.router.navigate(['/home']);
+    
+    setTimeout(() => {
+      document.location.reload();
+    }, 500);
   }
 
   updateCartCount(productId: number, qty: string) {
     this.productService.setCart(this.cartId, productId, Number(qty)).subscribe(
-      (resp) => console.log(resp),
+      (resp) => {
+      (this.allCartProducts = resp)},
       (err) => console.log(err)
     );
-    //this.router.navigate(['/home']);
+    
+    setTimeout(() => {
+      document.location.reload();
+    }, 500);
+  }
+
+  public handleReload() {
+    
   }
 
   private handleNoCartError(error: HttpErrorResponse) {
