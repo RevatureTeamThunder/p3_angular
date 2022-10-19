@@ -57,10 +57,12 @@ export class CartComponent implements OnInit {
       (resp) => console.log(resp),
       (err) => console.log(err)
     );
-    
+
+    setTimeout(() => {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/cart']);
   }); 
+    }, 1000);
   }
 
   updateCartCount(productId: number, qty: string) {
@@ -73,10 +75,11 @@ export class CartComponent implements OnInit {
     //  setTimeout(() => {
     //    location.href = location.href;
     //  }, 2000);
-   
+    setTimeout(() => {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/cart']);
   }); 
+}, 1000);
     
   }
 

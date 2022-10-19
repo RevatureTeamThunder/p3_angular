@@ -55,6 +55,7 @@ export class ProductCardComponent implements OnInit {
     let inCart = false;
 
     if (this.cartProducts) {
+      
       this.cartProducts.forEach((element) => {
         if (element.productId == product.productId) {
           console.log(this.cartProducts);
@@ -68,6 +69,7 @@ export class ProductCardComponent implements OnInit {
           inCart = true;
         }
       });
+   
     }
     if (inCart == false) {
       this.productService

@@ -104,9 +104,10 @@ export class ProductReviewsComponent implements OnInit {
       },
       () => {}
     );
-
+    setTimeout(() => {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/home/api/product/' + this.productInfo.productId]);
   }); 
+  }, 1000);
   }
 }
