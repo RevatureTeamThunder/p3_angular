@@ -48,10 +48,18 @@
                 </h3>
                 <hr />
                 <div class="description description-tabs">
-                    <ul id="myTab" class="nav nav-pills">
-                        <li class="active"><a href="#more-information" data-toggle="tab" class="no-margin">See Description </a></li>
-                        <li class=""><a href="#reviews" data-toggle="tab">See Reviews</a></li>
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                        <li class="active">
+                            <a href="#more-information" data-toggle="tab" class="no-margin">See Description&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                        <li class="">
+                            <a href="#reviews" data-toggle="tab">See Reviews</a>
+                        </li>  
                     </ul>
+
                         <div id="myTabContent" class="tab-content">
                         <div class="tab-pane fade active in" id="more-information">
                             <br />
@@ -61,13 +69,11 @@
                             </p>
                         </div>
                         
-                        <div class="tab-pane fade" id="reviews">
-                            <br />
+                        <div class="tab-pane fade active in" id="reviews">
                             <app-product-reviews [productInfo]="product"></app-product-reviews> 
-                            
-                    </div>
-                </div>
-                <hr />
+                        </div>
+                        </div>
+                
                 <div>
         		<button [routerLink]="['/home']" class="btn btn-primary">Back to Store</button>
         	    </div>
@@ -75,5 +81,6 @@
         </div>
     </div>
     <!-- end product -->
+</div>
 </div>
 

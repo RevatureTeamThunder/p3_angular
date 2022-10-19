@@ -128,13 +128,13 @@ body{
     text-align: center
 }
 
-.description-tabs {
+ .description-tabs {
     padding: 30px 0 5px
-}
+} 
 
 .description-tabs .tab-content {
     padding: 10px 0
-}
+} 
 
 .product-deatil {
     padding: 30px 30px 50px
@@ -142,10 +142,10 @@ body{
 
 .product-deatil hr+.description-tabs {
     padding: 0 0 5px 
-}
+} 
 
 .product-deatil .product-image {
-    border-right: none
+    border-right: none!important
 }
 
 .product-deatil .name {

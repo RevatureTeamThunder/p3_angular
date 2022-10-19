@@ -1,4 +1,8 @@
 /* Style the links inside the navigation bar */
+.navbar navbar-expand-lg navbar-light bg-light {
+  margin-bottom: 20px;
+}
+
 .topnav a {
   float: left;
   color: #f2f2f2;

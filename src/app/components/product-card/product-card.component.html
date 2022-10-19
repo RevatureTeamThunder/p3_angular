@@ -31,7 +31,7 @@
     
       <!-- Rating -->
       <p class="card-text" style="text-align: center;">Product Reviews</p>
-      <div class="d-flex justify-content-center" id="rating-container">                        
+    <div class="d-flex justify-content-center" id="rating-container">                        
         <div class="content text-center">
             <div class="ratings" *ngIf="productInfo.rating !== 0 && productInfo.rating !== null">
               <div class="col-sm-12"> 
@@ -50,7 +50,7 @@
             <div class="ratings" *ngIf="productInfo.rating == 0 || productInfo.rating == null">  
               <p>No product reviews</p>
               <a [routerLink]="['api/product/', productInfo.productId]">Be the first to add a review!</a>
-          </div>
+            </div>
         </div>
     </div>  
       
