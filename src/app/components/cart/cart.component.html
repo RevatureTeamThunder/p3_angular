@@ -25,6 +25,7 @@
               <input #quantitySelect type="number" id="quantity-select-input" class="form-control" aria-label="Sizing example input" style="max-width: 50px" value={{product.quantity}} aria-describedby="inputGroup-sizing-sm">
             </div><button class="btn btn-primary" (click)="updateCartCount(product.productId, (quantitySelect.value))">Update</button></td>
             <button class="btn btn-danger" (click)="removeFromCart(product.productId)">Remove</button>
+            
         </tr>
     </tbody>
 </table>

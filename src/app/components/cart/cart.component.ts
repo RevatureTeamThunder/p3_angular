@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { ProductService, Cart } from 'src/app/services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-cart',
@@ -56,9 +58,9 @@ export class CartComponent implements OnInit {
       (err) => console.log(err)
     );
     
-    setTimeout(() => {
-      location.href = location.href;
-    }, 500);
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/cart']);
+  }); 
   }
 
   updateCartCount(productId: number, qty: string) {
@@ -68,12 +70,13 @@ export class CartComponent implements OnInit {
       (err) => console.log(err)
     );
     
-    setTimeout(() => {
-      location.href = location.href;
-    }, 500);
-  }
-
-  public handleReload() {
+    //  setTimeout(() => {
+    //    location.href = location.href;
+    //  }, 2000);
+   
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/cart']);
+  }); 
     
   }
 
