@@ -21,7 +21,7 @@ export class ProductDetailsComponent implements OnInit {
       );
   }
 
-  
+  @Input() productInfo!: Product;
   product!: Product;
 
   getProductById(id: number){
